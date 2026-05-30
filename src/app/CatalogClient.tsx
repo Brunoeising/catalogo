@@ -55,7 +55,7 @@ export default function CatalogClient({ categories, products }: CatalogClientPro
             </p>
             <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-4">
               Eletrônicos &<br />
-              Perfumes Premium
+              Perfumes Arabes
             </h1>
             <p className="text-sky-100 text-lg leading-relaxed max-w-md">
               Encontre os melhores produtos, adicione ao carrinho e finalize seu pedido em
