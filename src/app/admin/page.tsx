@@ -80,7 +80,7 @@ function LoginScreen() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+    const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     if (err) {
       setError('Email ou senha incorretos.');
       setLoading(false);
@@ -106,6 +106,10 @@ function LoginScreen() {
               onChange={(e) => { setEmail(e.target.value); setError(''); }}
               placeholder="admin@catalogopro.com"
               required
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="email"
+              spellCheck={false}
               className="w-full bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/40 focus:border-sky-500/50 transition-all"
             />
           </div>
@@ -117,6 +121,7 @@ function LoginScreen() {
               onChange={(e) => { setPassword(e.target.value); setError(''); }}
               placeholder="Digite sua senha"
               required
+              autoComplete="current-password"
               className={`w-full bg-gray-800/50 border text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all ${
                 error ? 'border-rose-500/60' : 'border-gray-700/50 focus:border-sky-500/50'
               }`}
@@ -131,9 +136,6 @@ function LoginScreen() {
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
-          <p className="text-center text-gray-600 text-xs mt-3">
-            Credenciais: admin@catalogopro.com / admin123
-          </p>
         </form>
       </div>
     </div>
