@@ -142,9 +142,6 @@ function LoginScreen() {
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
-          <p className="text-center text-gray-600 text-xs mt-3">
-            Credenciais: admin@catalogopro.com / admin123
-          </p>
         </form>
       </div>
     </div>
@@ -440,106 +437,110 @@ function ProductModal({ product, categories, onClose, onSaved }: { product: Prod
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto animate-slide-up">
-        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10 rounded-t-3xl sm:rounded-t-2xl">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md shadow-2xl max-h-[100dvh] sm:max-h-[90vh] flex flex-col animate-slide-up">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-gray-100 flex-shrink-0 rounded-t-3xl sm:rounded-t-2xl">
           <h3 className="font-bold text-gray-900 text-base">{product ? 'Editar Produto' : 'Novo Produto'}</h3>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
             <X className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
-        <form onSubmit={handleSave} className="p-5 sm:p-6 space-y-4">
-          <Field label="Nome do Produto" required>
-            <input type="text" value={form.name} onChange={(e) => set('name', e.target.value)} required placeholder="Ex: iPhone 15 Pro" className={inputCls} />
-          </Field>
+        <div className="overflow-y-auto flex-1 overscroll-contain">
+          <form onSubmit={handleSave} className="p-5 sm:p-6 space-y-4">
+            <Field label="Nome do Produto" required>
+              <input type="text" value={form.name} onChange={(e) => set('name', e.target.value)} required placeholder="Ex: iPhone 15 Pro" className={inputCls} />
+            </Field>
 
-          <Field label="Categoria" required>
-            <div className="relative">
-              <select value={form.category_id} onChange={(e) => set('category_id', e.target.value)} className={`${inputCls} appearance-none pr-10`}>
-                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-            </div>
-          </Field>
+            <Field label="Categoria" required>
+              <div className="relative">
+                <select value={form.category_id} onChange={(e) => set('category_id', e.target.value)} className={`${inputCls} appearance-none pr-10`}>
+                  {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+              </div>
+            </Field>
 
-          <Field label="Preco (R$)" required>
-            <input type="number" value={form.price} onChange={(e) => set('price', e.target.value)} required min="0" step="0.01" placeholder="199.90" className={inputCls} />
-          </Field>
+            <Field label="Preco (R$)" required>
+              <input type="number" value={form.price} onChange={(e) => set('price', e.target.value)} required min="0" step="0.01" placeholder="199.90" className={inputCls} />
+            </Field>
 
-          <Field label="Imagem do Produto">
-            <div className="space-y-3">
-              <div
-                onClick={() => !uploading && fileRef.current?.click()}
-                className={`relative border-2 border-dashed rounded-xl transition-all cursor-pointer overflow-hidden ${uploading ? 'border-sky-300 bg-sky-50 cursor-wait' : 'border-gray-200 hover:border-sky-400 hover:bg-sky-50/30'}`}
-              >
-                {form.image_url ? (
-                  <div className="relative h-36 sm:h-40">
-                    <Image src={form.image_url} alt="Preview" fill className="object-cover" sizes="400px" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                      <span className="text-white text-sm font-medium flex items-center gap-1.5 bg-black/30 px-3 py-1.5 rounded-lg">
-                        <Upload className="w-4 h-4" />Trocar imagem
-                      </span>
+            <Field label="Imagem do Produto">
+              <div className="space-y-3">
+                <div
+                  onClick={() => !uploading && fileRef.current?.click()}
+                  className={`relative border-2 border-dashed rounded-xl transition-all cursor-pointer overflow-hidden ${uploading ? 'border-sky-300 bg-sky-50 cursor-wait' : 'border-gray-200 hover:border-sky-400 hover:bg-sky-50/30'}`}
+                >
+                  {form.image_url ? (
+                    <div className="relative h-36 sm:h-40">
+                      <Image src={form.image_url} alt="Preview" fill className="object-cover" sizes="400px" />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <span className="text-white text-sm font-medium flex items-center gap-1.5 bg-black/30 px-3 py-1.5 rounded-lg">
+                          <Upload className="w-4 h-4" />Trocar imagem
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="py-8 flex flex-col items-center gap-2 text-gray-400">
-                    {uploading ? (
-                      <>
-                        <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
-                        <p className="text-sm text-sky-600 font-medium">Enviando imagem...</p>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-1">
-                          <Upload className="w-6 h-6 text-gray-400" />
-                        </div>
-                        <p className="text-sm font-medium text-gray-600">Clique para fazer upload</p>
-                        <p className="text-xs text-gray-400">JPG, PNG, WebP — max. 5MB</p>
-                      </>
-                    )}
-                  </div>
-                )}
+                  ) : (
+                    <div className="py-6 flex flex-col items-center gap-2 text-gray-400">
+                      {uploading ? (
+                        <>
+                          <Loader2 className="w-8 h-8 text-sky-500 animate-spin" />
+                          <p className="text-sm text-sky-600 font-medium">Enviando imagem...</p>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
+                            <Upload className="w-5 h-5 text-gray-400" />
+                          </div>
+                          <p className="text-sm font-medium text-gray-600">Clique para fazer upload</p>
+                          <p className="text-xs text-gray-400">JPG, PNG, WebP — max. 5MB</p>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={handleUpload} />
+
+                {uploadError && <p className="text-rose-500 text-xs">{uploadError}</p>}
+
+                <div className="relative flex items-center gap-2">
+                  <div className="flex-1 h-px bg-gray-200" />
+                  <span className="text-[11px] text-gray-400 whitespace-nowrap">ou cole uma URL</span>
+                  <div className="flex-1 h-px bg-gray-200" />
+                </div>
+                <input
+                  type="url"
+                  value={form.image_url}
+                  onChange={(e) => set('image_url', e.target.value)}
+                  placeholder="https://..."
+                  className={inputCls}
+                />
               </div>
+            </Field>
 
-              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={handleUpload} />
+            <Field label="Descricao">
+              <textarea value={form.description} onChange={(e) => set('description', e.target.value)} rows={2} placeholder="Descricao do produto..." className={`${inputCls} resize-none`} />
+            </Field>
 
-              {uploadError && <p className="text-rose-500 text-xs">{uploadError}</p>}
-
-              <div className="relative flex items-center gap-2">
-                <div className="flex-1 h-px bg-gray-200" />
-                <span className="text-[11px] text-gray-400 whitespace-nowrap">ou cole uma URL</span>
-                <div className="flex-1 h-px bg-gray-200" />
-              </div>
-              <input
-                type="url"
-                value={form.image_url}
-                onChange={(e) => set('image_url', e.target.value)}
-                placeholder="https://..."
-                className={inputCls}
-              />
+            <div className="flex gap-5">
+              <label className="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" checked={form.available} onChange={(e) => set('available', e.target.checked)} className="w-4 h-4 accent-sky-600 rounded" />
+                <span className="text-sm text-gray-700 font-medium">Disponivel</span>
+              </label>
+              <label className="flex items-center gap-2.5 cursor-pointer">
+                <input type="checkbox" checked={form.featured} onChange={(e) => set('featured', e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
+                <span className="text-sm text-gray-700 font-medium">Destaque</span>
+              </label>
             </div>
-          </Field>
 
-          <Field label="Descricao">
-            <textarea value={form.description} onChange={(e) => set('description', e.target.value)} rows={3} placeholder="Descricao do produto..." className={`${inputCls} resize-none`} />
-          </Field>
-
-          <div className="flex gap-5">
-            <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" checked={form.available} onChange={(e) => set('available', e.target.checked)} className="w-4 h-4 accent-sky-600 rounded" />
-              <span className="text-sm text-gray-700 font-medium">Disponivel</span>
-            </label>
-            <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" checked={form.featured} onChange={(e) => set('featured', e.target.checked)} className="w-4 h-4 accent-amber-500 rounded" />
-              <span className="text-sm text-gray-700 font-medium">Destaque</span>
-            </label>
-          </div>
-
-          <button type="submit" disabled={saving || uploading} className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all text-sm mt-2 active:scale-[0.98]">
-            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {saving ? 'Salvando...' : 'Salvar Produto'}
-          </button>
-        </form>
+            <div className="pb-6 sm:pb-0">
+              <button type="submit" disabled={saving || uploading} className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all text-sm mt-2 active:scale-[0.98]">
+                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                {saving ? 'Salvando...' : 'Salvar Produto'}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
