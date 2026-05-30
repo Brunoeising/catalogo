@@ -1,29 +1,32 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Zap, Settings } from 'lucide-react';
+import { ShoppingBag, Zap, Settings } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
 export default function Header() {
   const { itemCount, openCart } = useCart();
 
   return (
-    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-100/80 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
+    <header className="sticky top-0 z-40 glass border-b border-surface-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-sky-500 to-cyan-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md shadow-brand-500/20">
               <Zap className="w-4 h-4 text-white" fill="white" />
             </div>
-            <span className="font-bold text-gray-900 text-lg tracking-tight">
-              Catalogo<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-600">José</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-surface-900 text-base sm:text-lg tracking-tight leading-none">
+                Catalogo<span className="text-gradient">Pro</span>
+              </span>
+              <span className="text-[10px] text-surface-400 font-medium tracking-wide hidden sm:block">ELETRONICOS & PERFUMES</span>
+            </div>
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Link
               href="/admin"
-              className="flex items-center gap-1.5 text-gray-400 hover:text-gray-700 px-2.5 py-2 rounded-lg hover:bg-gray-100 transition-all text-sm"
+              className="flex items-center gap-1.5 text-surface-500 hover:text-surface-800 p-2.5 rounded-xl hover:bg-surface-100 transition-all duration-200 text-sm border border-surface-200 hover:border-surface-300"
               title="Painel Admin"
             >
               <Settings className="w-4 h-4" />
@@ -32,12 +35,12 @@ export default function Header() {
 
             <button
               onClick={openCart}
-            className="relative flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:shadow-md active:scale-95"
+              className="relative flex items-center gap-2 bg-surface-900 hover:bg-surface-800 text-white px-3.5 sm:px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 hover:shadow-lg hover:shadow-surface-900/20 active:scale-95"
             >
-              <ShoppingCart className="w-4 h-4" />
+              <ShoppingBag className="w-[18px] h-[18px]" />
               <span className="hidden sm:inline">Carrinho</span>
               {itemCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-sky-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center ring-2 ring-white">
+                <span className="absolute -top-1.5 -right-1.5 bg-brand-500 text-white text-[10px] font-bold min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center ring-2 ring-white animate-bounce-subtle">
                   {itemCount > 99 ? '99+' : itemCount}
                 </span>
               )}
