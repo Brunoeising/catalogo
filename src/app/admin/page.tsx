@@ -80,9 +80,15 @@ function LoginScreen() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
-    if (err) {
-      setError('Email ou senha incorretos.');
+    try {
+      const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+      if (err) {
+        setError(err.message || 'Email ou senha incorretos.');
+        setLoading(false);
+      }
+    } catch (networkErr: unknown) {
+      const msg = networkErr instanceof Error ? networkErr.message : 'Erro de rede';
+      setError(`Falha na conexão: ${msg}`);
       setLoading(false);
     }
   }
@@ -136,6 +142,9 @@ function LoginScreen() {
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
+          <p className="text-center text-gray-600 text-xs mt-3">
+            Credenciais: admin@catalogopro.com / admin123
+          </p>
         </form>
       </div>
     </div>
