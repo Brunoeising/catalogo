@@ -32,7 +32,7 @@ export default function Header() {
 
             <button
               onClick={openCart}
-              className="relative flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-3.5 py-2 rounded-xl font-medium text-sm transition-all duration-200 hover:shadow-md active:scale-95"
+            className="relative flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:shadow-md active:scale-95"
             >
               <ShoppingCart className="w-4 h-4" />
               <span className="hidden sm:inline">Carrinho</span>
