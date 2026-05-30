@@ -16,7 +16,7 @@ export default function Header() {
               <Zap className="w-4 h-4 text-white" fill="white" />
             </div>
             <span className="font-bold text-gray-900 text-lg tracking-tight">
-              Catalogo<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-600">Pro</span>
+              Catalogo<span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-600">José</span>
             </span>
           </Link>
 
