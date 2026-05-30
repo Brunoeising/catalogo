@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="flex items-center gap-1.5 bg-sky-600 hover:bg-sky-700 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all duration-200 active:scale-95 hover:shadow-md"
           >
             <ShoppingCart className="w-3.5 h-3.5" />
-            Adicionar
+            {/* Adicionar */}
           </button>
         </div>
       </div>
